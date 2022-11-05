@@ -1,6 +1,7 @@
 package com.grupo8.algoritmos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,9 @@ public class SCAN extends AbstractAlgoritmo{
 
         izquierda = peticionesOrdenadas.stream()
                 .filter(i -> i < peticionInicial)
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        Collections.reverse(izquierda);
 
         peticionesProcesadas.add(peticionInicial);
         peticionesProcesadas.addAll(derecha);
