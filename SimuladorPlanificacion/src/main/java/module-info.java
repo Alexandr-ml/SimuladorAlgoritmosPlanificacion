@@ -6,3 +6,4 @@ module com.grupo8.simuladorplanificacion {
     opens com.grupo8.simuladorplanificacion to javafx.fxml;
     exports com.grupo8.simuladorplanificacion;
 }
+

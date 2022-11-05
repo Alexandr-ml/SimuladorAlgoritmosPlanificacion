@@ -1,5 +1,6 @@
 package com.grupo8.simuladorplanificacion;
 
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,10 +9,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class PrincipalController implements Initializable {
 
@@ -39,7 +43,7 @@ public class PrincipalController implements Initializable {
 
         cbAlgoritmos.setItems(FXCollections.observableArrayList(listadoAlgoritmos));
 
-        //Hacer funcion que traslade los puntos 
+        //Hacer funcion que traslade los puntos
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setLineWidth(2);
         double ancho = canvas.getWidth();
@@ -61,5 +65,9 @@ public class PrincipalController implements Initializable {
 
 
 
+
     }
+
+
+
     }
