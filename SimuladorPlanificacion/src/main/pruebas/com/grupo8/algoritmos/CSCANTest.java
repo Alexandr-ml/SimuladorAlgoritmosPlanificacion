@@ -16,7 +16,7 @@ class CSCANTest {
         ArrayList<Integer> listaP = new ArrayList<>();
         listaP.addAll(lista);
 
-        CSCAN cscan = new CSCAN(listaP);
+        CSCAN cscan = new CSCAN(listaP,false);
         cscan.procesar();
         cscan.getListaPeticionesProcesadas().forEach(System.out::println);
     }

@@ -7,9 +7,10 @@ public class CSCAN extends AbstractAlgoritmo{
     private List<Integer> derecha;
     private List<Integer> izquierda;
     private ArrayList<Integer> peticionesProcesadas = new ArrayList<>();
-
-    public CSCAN(ArrayList<Integer> peticiones) {
+    private boolean esCLOOK = false;
+    public CSCAN(ArrayList<Integer> peticiones,boolean esCLOOK) {
         super(peticiones);
+        this.esCLOOK = esCLOOK;
     }
 
 
@@ -30,7 +31,9 @@ public class CSCAN extends AbstractAlgoritmo{
 
         peticionesProcesadas.add(peticionInicial);
         peticionesProcesadas.addAll(derecha);
-        peticionesProcesadas.add(0);
+
+        if(!esCLOOK)peticionesProcesadas.add(0);
+
         peticionesProcesadas.addAll(izquierda);
 
 
