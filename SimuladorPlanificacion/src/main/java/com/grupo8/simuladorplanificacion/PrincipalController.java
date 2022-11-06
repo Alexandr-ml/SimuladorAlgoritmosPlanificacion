@@ -6,6 +6,7 @@ import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -21,7 +22,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.*;
 
-public class PrincipalController implements Initializable, EventHandler<ActionEvent> {
+public class PrincipalController implements Initializable{
     private int numPistas;
     @FXML
     Button btnEjecutarSimulacion,btnVerEstadisticas;
@@ -61,7 +62,7 @@ public class PrincipalController implements Initializable, EventHandler<ActionEv
         });
 
         cbAlgoritmos.setItems(FXCollections.observableArrayList(listadoAlgoritmos));
-        cbAlgoritmos.setOnAction(this);
+
 
         //Hacer funcion que traslade los puntos
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -89,36 +90,7 @@ public class PrincipalController implements Initializable, EventHandler<ActionEv
 
 
 
-    @Override
-    public void handle(ActionEvent event) {
-        //System.out.println(((ChoiceBox<String>)event.getSource()).getSelectionModel().getSelectedItem());
 
-        boolean estaDentroIntervaloPeticiones, esListaNumeros;
-
-        estaDentroIntervaloPeticiones = estaDentroDeIntervaloPeticiones();
-
-        esListaNumeros = esListaNumeros();
-
-        if( esListaNumeros) {
-            if(estaDentroIntervaloPeticiones){
-                btnEjecutarSimulacion.setDisable(false);
-            }
-            else{
-                deseleccionarAlgoritmo();
-                new Alert(Alert.AlertType.ERROR,"Introduzca valores en el intervalo 0 a "+(numPistas-1),ButtonType.CLOSE)
-                        .showAndWait();
-
-            }
-        }
-        else {
-            btnEjecutarSimulacion.setDisable(true);
-            deseleccionarAlgoritmo();
-            new Alert(Alert.AlertType.ERROR,"Introduzca valores validos en el listado de peticiones.",ButtonType.CLOSE)
-                    .showAndWait();
-        }
-
-
-    }
 
 
     @FXML
@@ -150,17 +122,15 @@ public class PrincipalController implements Initializable, EventHandler<ActionEv
 
     @FXML
     public void onClickCorrerSimulacion(){
-        if (esListaNumeros()){
-            if (estaDentroDeIntervaloPeticiones()){
 
-            }else {
-                deseleccionarAlgoritmo();
-                btnEjecutarSimulacion.setDisable(true);
-
-            }
-        }else {
-            deseleccionarAlgoritmo();
+        if(txtListadoPeticiones.getText().isBlank() || cbAlgoritmos.getSelectionModel().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR,"Rellene todos los campos necesarios.",ButtonType.CLOSE).showAndWait();
+            return;
         }
+        if(comprobacion()){
+
+        }
+
         txtListadoPeticiones.setDisable(false);
     }
 
@@ -170,12 +140,41 @@ public class PrincipalController implements Initializable, EventHandler<ActionEv
     }
 
     public boolean estaDentroDeIntervaloPeticiones(){
+
+
         return  Arrays.stream(txtListadoPeticiones.getText().split(","))
                 .mapToInt(Integer::parseInt)
-                .allMatch(i -> i > 0 && i < numPistas);
+                .peek(System.out::println)
+                .allMatch(i -> i > -1 && i < numPistas);
     }
 
     public void deseleccionarAlgoritmo(){
-        cbAlgoritmos.getSelectionModel().select(-1);
+        cbAlgoritmos.getSelectionModel().clearSelection();
+
+    }
+
+
+    public boolean comprobacion(){
+        boolean esListaNumeros = esListaNumeros();
+        boolean estaDentroIntervaloPeticiones = estaDentroDeIntervaloPeticiones();
+
+        if( esListaNumeros) {
+            if(estaDentroIntervaloPeticiones){
+                btnEjecutarSimulacion.setDisable(false);
+            }
+            else{
+                deseleccionarAlgoritmo();
+                new Alert(Alert.AlertType.ERROR,"Introduzca valores en el intervalo 0 a "+(numPistas-1),ButtonType.CLOSE)
+                        .showAndWait();
+            }
+        }
+        else {
+            btnEjecutarSimulacion.setDisable(true);
+            deseleccionarAlgoritmo();
+            new Alert(Alert.AlertType.ERROR,"Introduzca valores validos en el listado de peticiones.",ButtonType.CLOSE)
+                    .showAndWait();
+        }
+
+        return  esListaNumeros && estaDentroIntervaloPeticiones;
     }
 }
