@@ -1,6 +1,10 @@
 package com.grupo8.simuladorplanificacion;
 
 import javafx.animation.FadeTransition;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -15,10 +19,7 @@ import javafx.stage.Modality;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class PrincipalController implements Initializable, EventHandler<ActionEvent> {
     private int numPistas;
@@ -50,6 +51,7 @@ public class PrincipalController implements Initializable, EventHandler<ActionEv
 
         spnNumPistas.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(100,400,100,100));
         spnNumPistas.setPromptText("Max. 400 pistas");
+
 
 
         cbAlgoritmos.setItems(FXCollections.observableArrayList(listadoAlgoritmos));
@@ -84,11 +86,20 @@ public class PrincipalController implements Initializable, EventHandler<ActionEv
     @Override
     public void handle(ActionEvent event) {
         System.out.println(((ChoiceBox<String>)event.getSource()).getSelectionModel().getSelectedItem());
+        if(txtListadoPeticiones.getText().matches("^\\d+(?:[ \\t]*,[ \\t]*\\d+)+$")) {
+            btnEjecutarSimulacion.setDisable(false);
+
+        }
+        else {
+            btnEjecutarSimulacion.setDisable(true);
+            new Alert(Alert.AlertType.ERROR,"Introduzca valores validos en el listado de peticiones.",ButtonType.CLOSE).showAndWait();
+        }
     }
 
 
     @FXML
     public void onClickBtnSetNumeroPistas(){
+        txtListadoPeticiones.setDisable(false);
         numPistas = spnNumPistas.getValue();
         int saltos = numPistas/10;
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -96,9 +107,22 @@ public class PrincipalController implements Initializable, EventHandler<ActionEv
 
         for(int i = 0;i<=10;i++){
             if(i!=0) gc.fillText(String.valueOf(i*saltos),40*i+20-i,10);
-
         }
+
+        StringBuilder stringBuilder = new StringBuilder("Ejemplo: ");
+        for(int i = 0;i<3;i++){
+            stringBuilder.append((int) (Math.random()*numPistas)).append(", ");
+        }
+        stringBuilder.append("..., ").append(numPistas-1);
+
+        txtListadoPeticiones.setPromptText(stringBuilder.toString());
 
     }
 
+
+    @FXML
+    public void onClickCorrerSimulacion(){
+        if(txtListadoPeticiones.getText().isBlank()) new Alert(Alert.AlertType.ERROR,"Los campos no pueden estar vacios",ButtonType.OK).showAndWait();
+
+    }
 }
