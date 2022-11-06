@@ -53,6 +53,12 @@ public class PrincipalController implements Initializable, EventHandler<ActionEv
         spnNumPistas.setPromptText("Max. 400 pistas");
 
 
+        spnNumPistas.getEditor().textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                numPistas =  Integer.parseInt(newValue);
+            }
+        });
 
         cbAlgoritmos.setItems(FXCollections.observableArrayList(listadoAlgoritmos));
         cbAlgoritmos.setOnAction(this);
@@ -85,20 +91,39 @@ public class PrincipalController implements Initializable, EventHandler<ActionEv
 
     @Override
     public void handle(ActionEvent event) {
-        System.out.println(((ChoiceBox<String>)event.getSource()).getSelectionModel().getSelectedItem());
-        if(txtListadoPeticiones.getText().matches("^\\d+(?:[ \\t]*,[ \\t]*\\d+)+$")) {
-            btnEjecutarSimulacion.setDisable(false);
+        //System.out.println(((ChoiceBox<String>)event.getSource()).getSelectionModel().getSelectedItem());
 
+        boolean estaDentroIntervaloPeticiones, esListaNumeros;
+
+        estaDentroIntervaloPeticiones = estaDentroDeIntervaloPeticiones();
+
+        esListaNumeros = esListaNumeros();
+
+        if( esListaNumeros) {
+            if(estaDentroIntervaloPeticiones){
+                btnEjecutarSimulacion.setDisable(false);
+            }
+            else{
+                deseleccionarAlgoritmo();
+                new Alert(Alert.AlertType.ERROR,"Introduzca valores en el intervalo 0 a "+(numPistas-1),ButtonType.CLOSE)
+                        .showAndWait();
+
+            }
         }
         else {
             btnEjecutarSimulacion.setDisable(true);
-            new Alert(Alert.AlertType.ERROR,"Introduzca valores validos en el listado de peticiones.",ButtonType.CLOSE).showAndWait();
+            deseleccionarAlgoritmo();
+            new Alert(Alert.AlertType.ERROR,"Introduzca valores validos en el listado de peticiones.",ButtonType.CLOSE)
+                    .showAndWait();
         }
+
+
     }
 
 
     @FXML
     public void onClickBtnSetNumeroPistas(){
+
         txtListadoPeticiones.setDisable(false);
         numPistas = spnNumPistas.getValue();
         int saltos = numPistas/10;
@@ -106,14 +131,17 @@ public class PrincipalController implements Initializable, EventHandler<ActionEv
         gc.clearRect(40,0,400,15);
 
         for(int i = 0;i<=10;i++){
-            if(i!=0) gc.fillText(String.valueOf(i*saltos),40*i+20-i,10);
+            if(i!=0 && i*saltos < numPistas) gc.fillText(String.valueOf(i*saltos),40*i+20-i,10);
+            else if (i*saltos == numPistas)  gc.fillText(String.valueOf(i*saltos-1),40*i+20-i,10);
+
         }
 
         StringBuilder stringBuilder = new StringBuilder("Ejemplo: ");
-        for(int i = 0;i<3;i++){
-            stringBuilder.append((int) (Math.random()*numPistas)).append(", ");
+        for(int i = 0;i<4;i++){
+            stringBuilder.append((int) (Math.random()*numPistas)).append(",");
         }
-        stringBuilder.append("..., ").append(numPistas-1);
+
+        stringBuilder.setCharAt(stringBuilder.length()-1,' ');
 
         txtListadoPeticiones.setPromptText(stringBuilder.toString());
 
@@ -122,7 +150,32 @@ public class PrincipalController implements Initializable, EventHandler<ActionEv
 
     @FXML
     public void onClickCorrerSimulacion(){
-        if(txtListadoPeticiones.getText().isBlank()) new Alert(Alert.AlertType.ERROR,"Los campos no pueden estar vacios",ButtonType.OK).showAndWait();
+        if (esListaNumeros()){
+            if (estaDentroDeIntervaloPeticiones()){
 
+            }else {
+                deseleccionarAlgoritmo();
+                btnEjecutarSimulacion.setDisable(true);
+
+            }
+        }else {
+            deseleccionarAlgoritmo();
+        }
+        txtListadoPeticiones.setDisable(false);
+    }
+
+
+    public boolean esListaNumeros(){
+        return txtListadoPeticiones.getText().matches("^\\d+(?:[ \\t]*,[ \\t]*\\d+)+$");
+    }
+
+    public boolean estaDentroDeIntervaloPeticiones(){
+        return  Arrays.stream(txtListadoPeticiones.getText().split(","))
+                .mapToInt(Integer::parseInt)
+                .allMatch(i -> i > 0 && i < numPistas);
+    }
+
+    public void deseleccionarAlgoritmo(){
+        cbAlgoritmos.getSelectionModel().select(-1);
     }
 }
