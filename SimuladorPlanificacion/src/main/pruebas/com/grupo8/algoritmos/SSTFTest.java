@@ -11,7 +11,7 @@ class SSTFTest {
 
     @Test
     void procesar() {
-        List<Integer> lista = List.of(100,95,500,90,80,50);
+        List<Integer> lista = List.of(100,95,97,90,97,50);
         ArrayList<Integer> listaP = new ArrayList<>();
         listaP.addAll(lista);
 
