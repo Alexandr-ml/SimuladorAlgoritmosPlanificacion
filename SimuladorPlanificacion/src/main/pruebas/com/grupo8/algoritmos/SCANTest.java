@@ -15,7 +15,7 @@ class SCANTest {
         ArrayList<Integer> listaP = new ArrayList<>();
         listaP.addAll(lista);
 
-        SCAN scan = new SCAN(listaP);
+        SCAN scan = new SCAN(listaP,299);
         scan.procesar();
 
         scan.getListaPeticionesProcesadas().forEach(System.out::println);

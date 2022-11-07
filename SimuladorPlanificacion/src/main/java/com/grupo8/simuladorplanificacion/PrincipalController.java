@@ -1,5 +1,6 @@
 package com.grupo8.simuladorplanificacion;
 
+import com.grupo8.algoritmos.*;
 import javafx.animation.FadeTransition;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -7,6 +8,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -21,6 +23,8 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class PrincipalController implements Initializable{
     private int numPistas;
@@ -114,7 +118,6 @@ public class PrincipalController implements Initializable{
         }
 
         stringBuilder.setCharAt(stringBuilder.length()-1,' ');
-
         txtListadoPeticiones.setPromptText(stringBuilder.toString());
 
     }
@@ -128,7 +131,8 @@ public class PrincipalController implements Initializable{
             return;
         }
         if(comprobacion()){
-
+            TaskAlgoritmos taskAlgoritmos = new TaskAlgoritmos(listaPeticiones());
+            new Thread(taskAlgoritmos).run();
         }
 
         txtListadoPeticiones.setDisable(false);
@@ -140,12 +144,15 @@ public class PrincipalController implements Initializable{
     }
 
     public boolean estaDentroDeIntervaloPeticiones(){
-
-
         return  Arrays.stream(txtListadoPeticiones.getText().split(","))
                 .mapToInt(Integer::parseInt)
-                .peek(System.out::println)
                 .allMatch(i -> i > -1 && i < numPistas);
+    }
+
+    public ArrayList<Integer> listaPeticiones(){
+        return Arrays.stream(txtListadoPeticiones.getText().split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void deseleccionarAlgoritmo(){
@@ -177,4 +184,58 @@ public class PrincipalController implements Initializable{
 
         return  esListaNumeros && estaDentroIntervaloPeticiones;
     }
+
+    class TaskAlgoritmos extends Task<Map<String, AbstractAlgoritmo>> {
+        ArrayList<Integer> peticiones;
+
+        public TaskAlgoritmos(ArrayList<Integer> peticiones){
+            this.peticiones = peticiones;
+            peticiones.forEach(System.out::println);
+        }
+
+        @Override
+        protected Map<String, AbstractAlgoritmo> call() throws Exception {
+            Map<String,AbstractAlgoritmo> algoritmos = new HashMap<>();
+
+
+            FCFS fcfs = new FCFS(peticiones);
+
+            SSTF sstf = new SSTF(peticiones);
+            SCAN scan = new SCAN(peticiones,numPistas-1);
+            CSCAN cscan = new CSCAN(peticiones,false,numPistas-1);
+            SCAN LOOK = new SCAN(peticiones,-1);
+            CSCAN CLOOK = new CSCAN(peticiones,true,-1);
+
+            fcfs.procesar();
+            sstf.procesar();
+            scan.procesar();
+            cscan.procesar();
+            LOOK.procesar();
+            CLOOK.procesar();
+
+            algoritmos.put("FCFS",fcfs);
+            algoritmos.put("SSTF",sstf);
+            algoritmos.put("SCAN",scan);
+            algoritmos.put("C-SCAN",cscan);
+            algoritmos.put("LOOK",LOOK);
+            algoritmos.put("C-LOOK",CLOOK);
+
+            return algoritmos;
+        }
+
+        @Override
+        protected void done() {
+
+            try {
+               get().entrySet().stream().forEach(a -> System.out.println("Clave: "+a.getKey()+"\n Valor: "+a.getValue().getListaPeticionesProcesadas()));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+
+
 }

@@ -12,11 +12,11 @@ class CSCANTest {
     @Test
     void procesar() {
 
-        List<Integer> lista = List.of(100,95,500,90,80,50);
+        List<Integer> lista = List.of(100,95,55,90,80,50);
         ArrayList<Integer> listaP = new ArrayList<>();
         listaP.addAll(lista);
 
-        CSCAN cscan = new CSCAN(listaP,false);
+        CSCAN cscan = new CSCAN(listaP,true,-1);
         cscan.procesar();
         cscan.getListaPeticionesProcesadas().forEach(System.out::println);
     }

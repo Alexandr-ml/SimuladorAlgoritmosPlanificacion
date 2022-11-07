@@ -8,9 +8,11 @@ public class CSCAN extends AbstractAlgoritmo{
     private List<Integer> izquierda;
     private ArrayList<Integer> peticionesProcesadas = new ArrayList<>();
     private boolean esCLOOK = false;
-    public CSCAN(ArrayList<Integer> peticiones,boolean esCLOOK) {
+    private int ultimaPista;
+    public CSCAN(ArrayList<Integer> peticiones,boolean esCLOOK,int ultimaPista) {
         super(peticiones);
         this.esCLOOK = esCLOOK;
+        this.ultimaPista = ultimaPista;
     }
 
 
@@ -19,7 +21,9 @@ public class CSCAN extends AbstractAlgoritmo{
     public void procesar(){
         int peticionInicial = listaPeticiones.get(0);
 
-        List<Integer> peticionesOrdenadas = listaPeticiones.stream().sorted().toList();
+        List<Integer> peticionesOrdenadas = listaPeticiones.stream()
+                                                .sorted()
+                                                .toList();
 
         derecha = peticionesOrdenadas.stream()
                 .filter(i -> i > peticionInicial)
@@ -32,7 +36,11 @@ public class CSCAN extends AbstractAlgoritmo{
         peticionesProcesadas.add(peticionInicial);
         peticionesProcesadas.addAll(derecha);
 
-        if(!esCLOOK)peticionesProcesadas.add(0);
+        if(!esCLOOK){
+            peticionesProcesadas.add(ultimaPista);
+            peticionesProcesadas.add(0);
+
+        }
 
         peticionesProcesadas.addAll(izquierda);
 

@@ -3,6 +3,7 @@ package com.grupo8.algoritmos;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SSTF extends AbstractAlgoritmo{
     private ArrayList<Integer> listaPeticionesProcesadas = new ArrayList<>();
@@ -14,13 +15,14 @@ public class SSTF extends AbstractAlgoritmo{
 
     @Override
     public void procesar(){
-        int peticionActual = listaPeticiones.get(0);
-        listaPeticiones.remove(0);
+        ArrayList<Integer> copia = listaPeticiones.stream().collect(Collectors.toCollection(ArrayList::new));
+        int peticionActual = copia.get(0);
+        copia.remove(0);
         listaPeticionesProcesadas.add(peticionActual);
         int siguientePeticion = -1;
 
-        while (!listaPeticiones.isEmpty()){
-            siguientePeticion = siguientePeticionDistanciaMin(listaPeticiones,peticionActual);
+        while (!copia.isEmpty()){
+            siguientePeticion = siguientePeticionDistanciaMin(copia,peticionActual);
             listaPeticionesProcesadas.add(siguientePeticion);
             peticionActual = siguientePeticion;
 
