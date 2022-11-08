@@ -14,13 +14,19 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -30,16 +36,12 @@ public class PrincipalController implements Initializable{
     private int numPistas;
     @FXML
     Button btnEjecutarSimulacion,btnVerEstadisticas;
-
     @FXML
     Canvas canvas;
-
     @FXML
     ChoiceBox<String> cbAlgoritmos;
-
     @FXML
     TextField txtListadoPeticiones;
-
     @FXML
     Spinner<Integer> spnNumPistas;
     @FXML
@@ -92,11 +94,6 @@ public class PrincipalController implements Initializable{
 
     }
 
-
-
-
-
-
     @FXML
     public void onClickBtnSetNumeroPistas(){
 
@@ -122,7 +119,20 @@ public class PrincipalController implements Initializable{
 
     }
 
+    @FXML
+    public void onClickVerEstadisticas(){
+        Stage stageEstadisticas = new Stage();
 
+        try {
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("estadisticas-view.fxml")));
+            stageEstadisticas.setScene(scene);
+            stageEstadisticas.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
     @FXML
     public void onClickCorrerSimulacion(){
 
@@ -136,8 +146,8 @@ public class PrincipalController implements Initializable{
         }
 
         txtListadoPeticiones.setDisable(false);
+        btnVerEstadisticas.setDisable(false);
     }
-
 
     public boolean esListaNumeros(){
         return txtListadoPeticiones.getText().matches("^\\d+(?:[ \\t]*,[ \\t]*\\d+)+$");
@@ -157,9 +167,35 @@ public class PrincipalController implements Initializable{
 
     public void deseleccionarAlgoritmo(){
         cbAlgoritmos.getSelectionModel().clearSelection();
+    }
+    public void dibujarPeticiones(ArrayList<Integer> peticiones){
+        double xAnterior = 0,xActual = 0;
+        double yAnterior = 0,yActual = 0;
+        int numPistasTotales = numPistas;
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        for(int i = 0;i < peticiones.size(); i++){
+            int peticion = peticiones.get(i);
+
+
+             xActual = 20+400*((double)peticion/numPistasTotales);
+             yActual = 40*i+20-i;
+
+            if(i == 0) {
+                gc.fillOval((int) xActual-2-i,20,10,10);
+            }
+            else {
+                gc.fillOval(xActual-2,yActual-2,10,10);
+                gc.strokeLine(xAnterior,yAnterior,xActual,yActual);
+            }
+
+            xAnterior = xActual;
+            yAnterior = yActual;
+
+        }
+
 
     }
-
 
     public boolean comprobacion(){
         boolean esListaNumeros = esListaNumeros();
@@ -184,15 +220,12 @@ public class PrincipalController implements Initializable{
 
         return  esListaNumeros && estaDentroIntervaloPeticiones;
     }
-
     class TaskAlgoritmos extends Task<Map<String, AbstractAlgoritmo>> {
         ArrayList<Integer> peticiones;
-
         public TaskAlgoritmos(ArrayList<Integer> peticiones){
             this.peticiones = peticiones;
-            peticiones.forEach(System.out::println);
-        }
 
+        }
         @Override
         protected Map<String, AbstractAlgoritmo> call() throws Exception {
             Map<String,AbstractAlgoritmo> algoritmos = new HashMap<>();
@@ -225,17 +258,27 @@ public class PrincipalController implements Initializable{
 
         @Override
         protected void done() {
+            Map<String,AbstractAlgoritmo> algoritmosMap;
+            String claveAlgoritmoSeleccionado = cbAlgoritmos.getSelectionModel().getSelectedItem();
 
             try {
-               get().entrySet().stream().forEach(a -> System.out.println("Clave: "+a.getKey()+"\n Valor: "+a.getValue().getListaPeticionesProcesadas()));
+               algoritmosMap = get();
+
+               AbstractAlgoritmo algoritmoSeleccionado = algoritmosMap.get(claveAlgoritmoSeleccionado);
+               dibujarPeticiones(algoritmoSeleccionado.getListaPeticionesProcesadas());
+
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             }
 
+
         }
     }
+
+
+
 
 
 }
