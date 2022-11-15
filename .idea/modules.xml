@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/SimuladorAlgoritmosPlanificacion.iml" filepath="$PROJECT_DIR$/.idea/SimuladorAlgoritmosPlanificacion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SimuladorPlanificacion/SimuladorPlanificacion.iml" filepath="$PROJECT_DIR$/SimuladorPlanificacion/SimuladorPlanificacion.iml" />
+    </modules>
+  </component>
+</project>

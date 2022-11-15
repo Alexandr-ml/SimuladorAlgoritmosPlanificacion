@@ -1,14 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.grupo8.simuladorplanificacion.EstadisticasController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="466.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo8.simuladorplanificacion.EstadisticasController">
+   <children>
+      <TextField fx:id="txtListPeticiones" alignment="CENTER" layoutX="155.0" layoutY="28.0" prefHeight="25.0" prefWidth="632.0" />
+      <Label layoutX="32.0" layoutY="32.0" text="Listado de Peticiones:" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="30.0" layoutY="79.0" prefHeight="17.0" prefWidth="152.0" text="FCFS">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></Label>
+      <TableView id="tableFCFS" fx:id="tableFCFS" layoutX="31.0" layoutY="104.0" prefHeight="260.0" prefWidth="152.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Petición" />
+          <TableColumn prefWidth="75.0" text="Burst Time" />
+        </columns>
+      </TableView>
+      <TextField fx:id="txtFCFS" alignment="CENTER" layoutX="32.0" layoutY="371.0" prefHeight="25.0" prefWidth="152.0" />
+      <TextField fx:id="txtResultado" alignment="CENTER" layoutX="31.0" layoutY="415.0" prefHeight="25.0" prefWidth="962.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="193.0" layoutY="79.0" prefHeight="17.0" prefWidth="152.0" text="SSTF">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableSSTF" layoutX="193.0" layoutY="104.0" prefHeight="260.0" prefWidth="152.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="Petición" />
+            <TableColumn prefWidth="75.0" text="Burst Time" />
+         </columns>
+      </TableView>
+      <TextField fx:id="txtSSTF" alignment="CENTER" layoutX="193.0" layoutY="371.0" prefHeight="25.0" prefWidth="152.0" />
+      <TableView fx:id="tableSCAN" layoutX="355.0" layoutY="104.0" prefHeight="260.0" prefWidth="152.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="Petición" />
+            <TableColumn prefWidth="75.0" text="Burst Time" />
+         </columns>
+      </TableView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="355.0" layoutY="79.0" prefHeight="17.0" prefWidth="152.0" text="SCAN">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtSCAN" alignment="CENTER" layoutX="355.0" layoutY="371.0" prefHeight="25.0" prefWidth="152.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="516.0" layoutY="79.0" prefHeight="17.0" prefWidth="152.0" text="C-SCAN">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableCSCAN" layoutX="517.0" layoutY="104.0" prefHeight="260.0" prefWidth="152.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="Petición" />
+            <TableColumn prefWidth="75.0" text="Burst Time" />
+         </columns>
+      </TableView>
+      <TextField fx:id="txtCSCAN" alignment="CENTER" layoutX="518.0" layoutY="371.0" prefHeight="25.0" prefWidth="152.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="679.0" layoutY="79.0" prefHeight="17.0" prefWidth="152.0" text="LOOK">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableLOOK" layoutX="679.0" layoutY="104.0" prefHeight="260.0" prefWidth="152.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="Petición" />
+            <TableColumn prefWidth="75.0" text="Burst Time" />
+         </columns>
+      </TableView>
+      <TextField fx:id="txtLOOK" alignment="CENTER" layoutX="679.0" layoutY="371.0" prefHeight="25.0" prefWidth="152.0" />
+      <TableView fx:id="tableCLOOK" layoutX="841.0" layoutY="104.0" prefHeight="260.0" prefWidth="152.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="Petición" />
+            <TableColumn prefWidth="75.0" text="Burst Time" />
+         </columns>
+      </TableView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="841.0" layoutY="79.0" prefHeight="17.0" prefWidth="152.0" text="C-LOOK">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCLOOK" alignment="CENTER" layoutX="841.0" layoutY="371.0" prefHeight="25.0" prefWidth="152.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="792.0" layoutY="32.0" prefHeight="17.0" prefWidth="78.0" text="N° Pistas">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtnumpistas" alignment="CENTER" layoutX="863.0" layoutY="28.0" prefHeight="25.0" prefWidth="125.0" />
+   </children>
 </AnchorPane>
