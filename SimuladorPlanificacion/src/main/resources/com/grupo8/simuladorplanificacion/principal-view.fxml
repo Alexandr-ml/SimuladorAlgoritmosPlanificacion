@@ -27,7 +27,7 @@
             <Spinner fx:id="spnNumPistas" layoutX="12.0" layoutY="47.0" prefHeight="25.0" prefWidth="178.0" />
             <Button fx:id="btnNumPistas" layoutX="16.0" layoutY="83.0" mnemonicParsing="false" onAction="#onClickBtnSetNumeroPistas" text="OK." />
             <Button fx:id="btnLimpiarGrafica" layoutX="14.0" layoutY="380.0" mnemonicParsing="false" onAction="#onClickLimpiarGrafica" prefHeight="26.0" prefWidth="178.0" text="Limpiar gráfica." />
-            <Button layoutX="16.0" layoutY="422.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="178.0" text="Calcular tamaño del disco" />
+            <Button fx:id="btnCalcularTamanoDisco" layoutX="16.0" layoutY="422.0" mnemonicParsing="false" onAction="#onClickCalcularTamanoDisco" prefHeight="26.0" prefWidth="178.0" text="Calcular tamaño del disco" />
          </children></AnchorPane>
   </items>
 </SplitPane>

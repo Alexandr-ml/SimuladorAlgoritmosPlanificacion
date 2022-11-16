@@ -33,7 +33,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class PrincipalController implements Initializable{
-    private int numPistas;
+    private static int numPistas;
     public static Map<String,AbstractAlgoritmo> algoritmosMap;
     @FXML
     Button btnEjecutarSimulacion,btnVerEstadisticas;
@@ -49,6 +49,8 @@ public class PrincipalController implements Initializable{
     Button btnNumPistas;
     @FXML
     Button btnLimpiarGrafica;
+    @FXML
+    Button btnCalcularTamanoDisco;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ArrayList<String> listadoAlgoritmos = new ArrayList<>();
@@ -285,19 +287,20 @@ public class PrincipalController implements Initializable{
         double ancho = canvas.getWidth();
         double alto = canvas.getHeight();
 
-        gc.strokeLine(20,20,20,alto);
+        //gc.strokeLine(20,20,20,alto);
         gc.strokeLine(20,20,alto,20);
 
         gc.fillText("0",10,15);
 
+
         for(int i = 1 ;i<=10;i++){
             gc.strokeLine(i*40+20,15,i*40+20,25);
         }
-
+        /*
         for(int i = 1 ;i<=10;i++){
             gc.strokeLine(15,i*40+20,25,i*40+20);
         }
-
+        */
     }
 
 
@@ -311,6 +314,30 @@ public class PrincipalController implements Initializable{
 
         dibujarPlano(canvas);
         setNumPistas();
+
+    }
+
+    public static int getNumPistas(){
+        return numPistas;
+    }
+    @FXML
+    public void onClickCalcularTamanoDisco(){
+
+        if(numPistas == 0) {
+            new Alert(Alert.AlertType.ERROR,"Rellene todos los campos necesarios.",ButtonType.CLOSE).showAndWait();
+            return;
+        }
+
+        Stage stage = new Stage();
+        Scene scene;
+        try {
+            scene = new Scene(FXMLLoader.load(getClass().getResource("TamañoDisco-view.fxml")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        stage.setScene(scene);
+        stage.showAndWait();
 
     }
 

@@ -220,7 +220,7 @@ public class EstadisticasController implements Initializable {
                                 }
                             }).get();
 
-            txtresultado.setText("El algoritmo con el mejor tiempo promedio es: "+algoEficiente.getKey()+" con tiempo promedio: "+algoEficiente.getValue());
+            txtresultado.setText("El algoritmo recomendado es: "+algoEficiente.getKey()+" con tiempo promedio: "+algoEficiente.getValue());
 
 
         }
