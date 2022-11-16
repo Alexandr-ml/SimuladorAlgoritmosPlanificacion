@@ -115,7 +115,7 @@ public class PrincipalController implements Initializable{
     @FXML
     public void onClickVerEstadisticas(){
         Stage stageEstadisticas = new Stage();
-
+        stageEstadisticas.setTitle("Estadísticas globales");
         try {
             Scene scene = new Scene(FXMLLoader.load(getClass().getResource("estadisticas-view.fxml")));
             stageEstadisticas.setScene(scene);
