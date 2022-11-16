@@ -47,6 +47,8 @@ public class PrincipalController implements Initializable{
     Spinner<Integer> spnNumPistas;
     @FXML
     Button btnNumPistas;
+    @FXML
+    Button btnLimpiarGrafica;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ArrayList<String> listadoAlgoritmos = new ArrayList<>();
@@ -75,7 +77,7 @@ public class PrincipalController implements Initializable{
 
         dibujarPlano(canvas);
 
-        
+
         //Metodo para limpiar al canvas
         //gc.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
 
@@ -84,6 +86,11 @@ public class PrincipalController implements Initializable{
     @FXML
     public void onClickBtnSetNumeroPistas(){
 
+        setNumPistas();
+
+    }
+
+    public void setNumPistas(){
         txtListadoPeticiones.setDisable(false);
         numPistas = spnNumPistas.getValue();
         int saltos = numPistas/10;
@@ -103,7 +110,6 @@ public class PrincipalController implements Initializable{
 
         stringBuilder.setCharAt(stringBuilder.length()-1,' ');
         txtListadoPeticiones.setPromptText(stringBuilder.toString());
-
     }
 
     @FXML
@@ -291,6 +297,20 @@ public class PrincipalController implements Initializable{
         for(int i = 1 ;i<=10;i++){
             gc.strokeLine(15,i*40+20,25,i*40+20);
         }
+
+    }
+
+
+    @FXML
+    public void onClickLimpiarGrafica(){
+
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        //Metodo para limpiar al canvas
+        gc.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
+
+        dibujarPlano(canvas);
+        setNumPistas();
 
     }
 

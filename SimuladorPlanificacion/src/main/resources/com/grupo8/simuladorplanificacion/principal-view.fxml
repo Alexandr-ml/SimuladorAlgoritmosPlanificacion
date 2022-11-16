@@ -17,15 +17,17 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="197.0">
          <children>
-            <Label layoutX="11.0" layoutY="304.0" text="Algoritmos:" />
-            <ChoiceBox fx:id="cbAlgoritmos" layoutX="11.0" layoutY="330.0" prefHeight="25.0" prefWidth="178.0" />
-            <TextField fx:id="txtListadoPeticiones" disable="true" layoutX="8.0" layoutY="249.0" prefHeight="26.0" prefWidth="178.0" />
-            <Label layoutX="5.0" layoutY="214.0" prefHeight="18.0" prefWidth="178.0" text="Ingrese el listado de peticiones:" />
-            <Button fx:id="btnEjecutarSimulacion" layoutX="11.0" layoutY="385.0" mnemonicParsing="false" onAction="#onClickCorrerSimulacion" prefHeight="25.0" prefWidth="178.0" text="Correr simulación." />
-            <Button fx:id="btnVerEstadisticas" disable="true" layoutX="11.0" layoutY="440.0" mnemonicParsing="false" onAction="#onClickVerEstadisticas" prefHeight="25.0" prefWidth="178.0" text="Estadisticas." />
+            <Label layoutX="12.0" layoutY="197.0" text="Algoritmos:" />
+            <ChoiceBox fx:id="cbAlgoritmos" layoutX="12.0" layoutY="223.0" prefHeight="25.0" prefWidth="178.0" />
+            <TextField fx:id="txtListadoPeticiones" disable="true" layoutX="12.0" layoutY="155.0" prefHeight="26.0" prefWidth="178.0" />
+            <Label layoutX="15.0" layoutY="124.0" prefHeight="18.0" prefWidth="178.0" text="Ingrese el listado de peticiones:" />
+            <Button fx:id="btnEjecutarSimulacion" layoutX="12.0" layoutY="278.0" mnemonicParsing="false" onAction="#onClickCorrerSimulacion" prefHeight="25.0" prefWidth="178.0" text="Correr simulación." />
+            <Button fx:id="btnVerEstadisticas" disable="true" layoutX="12.0" layoutY="333.0" mnemonicParsing="false" onAction="#onClickVerEstadisticas" prefHeight="25.0" prefWidth="178.0" text="Estadisticas." />
             <Label layoutX="14.0" layoutY="23.0" text="Número de pistas:" />
             <Spinner fx:id="spnNumPistas" layoutX="12.0" layoutY="47.0" prefHeight="25.0" prefWidth="178.0" />
             <Button fx:id="btnNumPistas" layoutX="16.0" layoutY="83.0" mnemonicParsing="false" onAction="#onClickBtnSetNumeroPistas" text="OK." />
+            <Button fx:id="btnLimpiarGrafica" layoutX="14.0" layoutY="380.0" mnemonicParsing="false" onAction="#onClickLimpiarGrafica" prefHeight="26.0" prefWidth="178.0" text="Limpiar gráfica." />
+            <Button layoutX="16.0" layoutY="422.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="178.0" text="Calcular tamaño del disco" />
          </children></AnchorPane>
   </items>
 </SplitPane>
