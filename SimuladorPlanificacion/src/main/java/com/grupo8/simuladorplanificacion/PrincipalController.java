@@ -72,24 +72,10 @@ public class PrincipalController implements Initializable{
 
 
         //Hacer funcion que traslade los puntos
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setLineWidth(2);
-        double ancho = canvas.getWidth();
-        double alto = canvas.getHeight();
 
-        gc.strokeLine(20,20,20,alto);
-        gc.strokeLine(20,20,alto,20);
+        dibujarPlano(canvas);
 
-        gc.fillText("0",10,15);
-
-        for(int i = 1 ;i<=10;i++){
-            gc.strokeLine(i*40+20,15,i*40+20,25);
-        }
-
-        for(int i = 1 ;i<=10;i++){
-            gc.strokeLine(15,i*40+20,25,i*40+20);
-        }
-
+        
         //Metodo para limpiar al canvas
         //gc.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
 
@@ -285,5 +271,27 @@ public class PrincipalController implements Initializable{
     }
 
 
+    public void dibujarPlano(Canvas canvas){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+
+        gc.setLineWidth(2);
+        double ancho = canvas.getWidth();
+        double alto = canvas.getHeight();
+
+        gc.strokeLine(20,20,20,alto);
+        gc.strokeLine(20,20,alto,20);
+
+        gc.fillText("0",10,15);
+
+        for(int i = 1 ;i<=10;i++){
+            gc.strokeLine(i*40+20,15,i*40+20,25);
+        }
+
+        for(int i = 1 ;i<=10;i++){
+            gc.strokeLine(15,i*40+20,25,i*40+20);
+        }
+
+    }
 
 }
