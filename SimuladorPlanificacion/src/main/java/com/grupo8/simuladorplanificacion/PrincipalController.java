@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 
 public class PrincipalController implements Initializable{
     private int numPistas;
+    public static Map<String,AbstractAlgoritmo> algoritmosMap;
     @FXML
     Button btnEjecutarSimulacion,btnVerEstadisticas;
     @FXML
@@ -126,6 +127,7 @@ public class PrincipalController implements Initializable{
         try {
             Scene scene = new Scene(FXMLLoader.load(getClass().getResource("estadisticas-view.fxml")));
             stageEstadisticas.setScene(scene);
+
             stageEstadisticas.showAndWait();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -179,13 +181,13 @@ public class PrincipalController implements Initializable{
 
 
              xActual = 20+400*((double)peticion/numPistasTotales);
-             yActual = 40*i+20-i;
+             yActual = 40*i+20;
 
             if(i == 0) {
                 gc.fillOval((int) xActual-2-i,20,10,10);
             }
             else {
-                gc.fillOval(xActual-2,yActual-2,10,10);
+                gc.fillOval(xActual-5,yActual-5,10,10);
                 gc.strokeLine(xAnterior,yAnterior,xActual,yActual);
             }
 
@@ -258,7 +260,7 @@ public class PrincipalController implements Initializable{
 
         @Override
         protected void done() {
-            Map<String,AbstractAlgoritmo> algoritmosMap;
+
             String claveAlgoritmoSeleccionado = cbAlgoritmos.getSelectionModel().getSelectedItem();
 
             try {
@@ -277,7 +279,10 @@ public class PrincipalController implements Initializable{
         }
     }
 
+    public static Map<String,AbstractAlgoritmo> getMapaPeticiones(){
 
+        return algoritmosMap;
+    }
 
 
 

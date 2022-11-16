@@ -2,6 +2,7 @@ package com.grupo8.algoritmos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CSCAN extends AbstractAlgoritmo{
     private List<Integer> derecha;
@@ -51,4 +52,7 @@ public class CSCAN extends AbstractAlgoritmo{
     public ArrayList<Integer> getListaPeticionesProcesadas() {
         return peticionesProcesadas;
     }
+
+
+
 }
