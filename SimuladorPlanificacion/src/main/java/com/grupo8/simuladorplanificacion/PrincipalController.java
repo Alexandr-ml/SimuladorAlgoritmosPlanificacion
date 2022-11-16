@@ -179,10 +179,15 @@ public class PrincipalController implements Initializable{
 
             if(i == 0) {
                 gc.fillOval((int) xActual-2-i,20,10,10);
+                gc.fillText(String.valueOf(peticion),xActual+10,yActual+15);
             }
             else {
                 gc.fillOval(xActual-5,yActual-5,10,10);
                 gc.strokeLine(xAnterior,yAnterior,xActual,yActual);
+                //Peticion en pantalla
+                gc.fillText(String.valueOf(peticion),xActual+10,yActual);
+
+
             }
 
             xAnterior = xActual;
@@ -208,7 +213,7 @@ public class PrincipalController implements Initializable{
             }
         }
         else {
-            btnEjecutarSimulacion.setDisable(true);
+
             deseleccionarAlgoritmo();
             new Alert(Alert.AlertType.ERROR,"Introduzca valores validos en el listado de peticiones.",ButtonType.CLOSE)
                     .showAndWait();
