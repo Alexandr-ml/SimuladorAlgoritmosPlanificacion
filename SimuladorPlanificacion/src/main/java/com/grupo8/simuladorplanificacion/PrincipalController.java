@@ -335,6 +335,7 @@ public class PrincipalController implements Initializable{
 
         Stage stage = new Stage();
         Scene scene;
+        stage.setTitle("Calcular el tamaño del disco duro.");
         try {
             scene = new Scene(FXMLLoader.load(getClass().getResource("TamañoDisco-view.fxml")));
         } catch (IOException e) {
