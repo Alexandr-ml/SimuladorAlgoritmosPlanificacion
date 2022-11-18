@@ -30,8 +30,8 @@ public class TamañoDiscoController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         numPistas = PrincipalController.getNumPistas();
         spnNumCabezas.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,8,1));
-        spnBytesSector.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,512,512));
-        spnSectoresPista.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,12,1));
+        spnBytesSector.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1000,512));
+        spnSectoresPista.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,64,1));
         spnNumPistas.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1000,numPistas));
 
     }
