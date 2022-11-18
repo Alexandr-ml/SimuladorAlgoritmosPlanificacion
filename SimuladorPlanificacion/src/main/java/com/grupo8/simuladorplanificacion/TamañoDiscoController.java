@@ -31,7 +31,7 @@ public class TamañoDiscoController implements Initializable {
         numPistas = PrincipalController.getNumPistas();
         spnNumCabezas.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,8,1));
         spnBytesSector.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1000,512));
-        spnSectoresPista.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,64,1));
+        spnSectoresPista.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1000,1));
         spnNumPistas.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1000,numPistas));
 
     }
